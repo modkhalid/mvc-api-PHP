@@ -28,10 +28,10 @@ class Help extends Controller{
                     $response->select();
                 }
                 break;
+
             case 'post':
-                if(isset($_POST['submit'])){
-                    echo $_POST['email'];
-                }
+                $response->insert(json_decode(file_get_contents('php://input')));
+            
         }
         
 

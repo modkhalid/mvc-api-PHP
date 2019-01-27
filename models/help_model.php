@@ -38,4 +38,12 @@ class HelpModel extends Model{
         echo json_encode($main);
         return json_encode($main);
     }
+
+
+    public function insert($param){
+        $query="INSERT INTO customer (name,email,password) values ('hamadi','$param->email','123456')";
+        $response=$this->db->insert($query);
+        echo $query;
+
+    }
 }

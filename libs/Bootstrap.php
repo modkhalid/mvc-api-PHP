@@ -8,8 +8,6 @@ class Bootstrap {
         if(empty($url[0])){
             require 'controllers/index.php';
             $controller=new Index;
-
-            // $controller->view->render('index/index');
             exit;
         }
 
@@ -19,24 +17,13 @@ class Bootstrap {
         if(file_exists($file)){
             require $file;
         }else{
-            // throw new Exception("the $file is not exist");
-            // echo "Invalid url <u style='color:red;'>khalid/".$_GET['url']."</u><br>";
             require 'controllers/error.php';
             $controller=new Errors;
             exit;
         }
-        // require ;
+
         $controller=new $url[0];
-
-
-        // if(isset($url[2])){
-            array_shift($url);
-        //     $controller->call($url);
-        // }else{
-        //     if(isset($url[1])){
-        //         $controller->call();
-        //     }
-        // }
+        array_shift($url);
         $controller->call($url);
     }
 }
