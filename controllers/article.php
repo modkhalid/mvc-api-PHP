@@ -69,6 +69,10 @@ class Article extends Controller{
 
     }
 }
-
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR  AN ARTICLE
+    */
 
 ?>

@@ -8,27 +8,15 @@ class Comment extends Controller{
     {
         require 'models/'.strtolower(get_class($this)).'_model.php';
         $model=get_class($this)."Model";
+
         $response=new $model();
-        if(!isset($job[0]) ){
-            echo json_encode(array(array(
-	            'id'=>404,
-	            'status'=>'invalid artcle link id'
-	        ))); 
-	        return;
 
-        }
 
+        $job=strtolower($_SERVER['REQUEST_METHOD']);
+        // echo $job12;
         
-        switch($job[0]){
+        switch($job){
             case 'get':
-            	// if(!isset($job[1])){
-
-            	// }
-             //    if(isset($job[2])){
-             //    	$response->select($job[1],$job[2]);
-             //    }else{
-             //    	$response->select($job[1]);
-             //    }
             	$response->select(json_decode(file_get_contents('php://input')));
                 break;
 
@@ -36,21 +24,12 @@ class Comment extends Controller{
                 $response->insert(json_decode(file_get_contents('php://input')));
                 break;
 
-            case 'update':
+            case 'put':
                 $response->update(json_decode(file_get_contents('php://input')));
-                // echo "string";
                 break;
 
             case 'delete':
-                if(!isset($job[1])){
-                    echo json_encode(array(array(
-                        'id'=>404,
-                        'error'=>"invalid url access"
-                    )));
-
-                }else{
-                    $response->delete($job[1]);
-                }
+                $response->delete()(json_decode(file_get_contents('php://input')));
                 break;
 
 
@@ -64,6 +43,11 @@ class Comment extends Controller{
         
 
     }
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR COMMENT OF AN ARTICLE
+    */
 }
 
 

@@ -26,5 +26,11 @@ class Bootstrap {
         array_shift($url);
         $controller->call($url);
     }
+
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR MAIN PAGE
+    */
 }
 ?>

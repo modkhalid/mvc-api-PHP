@@ -9,20 +9,18 @@ class CommentModel extends Model{
 
     public function select($param=false)
     {
-        if($param){
-            if(isset($param->comment)){
-            	$query="SELECT * FROM comment where article_id='$param->article' and comment_id='$param->comment'";
-            }else{
-            	$query="SELECT * FROM comment where article_id='$param->article'";
-            }            
+        if(isset($param->comment_id) && isset($param->article_id)){
+        	$query="SELECT * FROM comment where article_id='$param->article_id' and comment_id='$param->comment_id'";
+        }else if(isset($param->article_id)){
+        	$query="SELECT * FROM comment where article_id='$param->article_id'";
         }else{
-           echo json_encode(array(array(
+            echo json_encode(array(array(
                 'id'=>400,
-                'error'=>"an error occur while posting data"
+                'word'=>"No permission to access this api"
             )));
-           return;
-        }
-
+            return;
+        }            
+        // echo "$query";
         $response=$this->db->select($query);
         
 
@@ -32,7 +30,8 @@ class CommentModel extends Model{
                 $array=array(
                     'id'=>$row['comment_id'],
                     'name'=>$row['name'],
-                    'comment'=>$row['content']
+                    'body'=>$row['content'],
+                    'email'=>$row['email']
                 );
                 array_push($main,$array);
             }
@@ -52,18 +51,18 @@ class CommentModel extends Model{
     public function insert($param){
         
         $id=uniqid(rand(0,100000000000000000));
-        $query="INSERT INTO comment (comment_id,name,content,article_id) values ('$id','$param->name','$param->content','$param->id')";
+        $query="INSERT INTO comment (comment_id,name,content,article_id,email) values ('$id','$param->name','$param->body','$param->id','$param->email')";
 
         $response=$this->db->insert($query);
         if(!$response){
             echo json_encode(array(array(
-                'id'=>404,
-                'error'=>"an error occur while posting data"
+                'message'=>"an error occur while posting data",
+                'error'=>"404"
             )));
         }else{
             echo json_encode(array(array(
-                'id'=>$id,
-                'status'=>"ok"
+                'message'=>"success",
+                'status'=>"200"
             )));
         }
         
@@ -72,17 +71,44 @@ class CommentModel extends Model{
 
 
     public function delete($param){
-        $query="DELETE FROM article where article_id='$param'";
-        $this->db->delete($query);
+        $sql="select comment_id FROM comment where comment_id='$param->comment_id";
+        $search=$this->db->search($sql);
+        
+
+        if($search){
+            $query="DELETE FROM article where comment_id='$param->comment_id'";
+            $this->db->delete($query);
+            echo json_encode(array(array(
+                'message'=>"success",
+                'status'=>"200"
+            )));
+            return;
+
+        }else{
+
+            echo json_encode(array(array(
+                'message'=>"Deletion is not performed",
+                'status'=>"404"
+            )));
+            return;
+        }
         
     }
 
 
     public function update($param){
-        $query="UPDATE `article` SET `article_header`='$param->header',`article_body`='$param->body' WHERE `article_id`='$param->id'";
-        $this->db->update($query);
+        // $query="UPDATE `comment` SET `article_content`='$param->header',`article_body`='$param->body' WHERE `article_id`='$param->id'";
+        // $this->db->update($query);
         echo json_encode(array(array(
-            "name"=>$query
+            // "name"=>$query
+            "message"=>"Update function is not ready"
         )));
     }
+
+
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR COMMENT/MODEL
+    */
 }

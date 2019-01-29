@@ -5,4 +5,10 @@ class Model{
     {
         $this->db=new Database();
     }
+
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR MODEL
+    */
 }

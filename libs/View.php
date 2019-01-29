@@ -9,4 +9,9 @@ class View{
     {
        require 'view/'.$name.".php";
     }
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR VIEW
+    */
 }

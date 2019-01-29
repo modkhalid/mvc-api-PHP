@@ -26,7 +26,7 @@
 
     public function select($query){
         $result=mysqli_query($this->conn,$this->escape($query));
-
+        // echo $query;
         if(mysqli_num_rows($result)>0){
             return $result;
         }
@@ -34,35 +34,29 @@
     }
 
     public function delete($query){
-        mysqli_query($this->conn,$this->escape($query));
-
-        if(mysqli_affected_rows($this->conn)>0){
-            echo json_encode(array(array(
-                'id'=>200,
-                'status'=>"Success"
-            )));
-            return true;
-        }else{
-            echo json_encode(array(array(
-                'id'=>404,
-                'status'=>"error"
-            )));  
-            return false;
-        }
-        
+        return mysqli_query($this->conn,$this->escape($query));        
     }
 
 
     public function update($query){
         $result=mysqli_query($this->conn,$query);
-
-        // if(mysqli_num_rows($result)>0){
-        //     return $result;
-        // }
-        // return false;
     }
 
 
+    public function search($query){
+        $result=mysqli_query($this->conn,$this->escape($query));
+        // echo $query;
+        if(mysqli_num_rows($result)>0){
+            return true;
+        }
+        return false;
+    }
+
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR CONNECTION TO DATABASE
+    */
 }
 
 ?>

@@ -7,4 +7,9 @@ class Errors extends Controller{
         $this->view->msg="this page is not exists";
         $this->view->render('error/index');
     }
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR COMMENT OF AN Error
+    */
 }

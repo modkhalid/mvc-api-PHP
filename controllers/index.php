@@ -12,4 +12,9 @@ class Index extends Controller
         	'status'=>400
         )));
     }
+    /*
+        API developed by modkhalid
+        https://github.com/modkhalid
+        API FOR COMMON PAGE
+    */
 }
